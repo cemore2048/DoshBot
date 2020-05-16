@@ -1,0 +1,10 @@
+coverage
+*.log
+node_modules
+.DS_Store
+.serverless
+config.json
+config-*.json
+.idea
+dist
+.vscode/
