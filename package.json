@@ -1,0 +1,14 @@
+{
+  "name": "doshbot",
+  "version": "1.0.0",
+  "description": "Dosh kudos bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "author": "Rafa",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^3.9.2"
+  }
+}
