@@ -5,6 +5,7 @@ const PORT = 3000
 const app: express.Application = express()
 
 app.get('/', function(req, res) {
+    console.log("Someone came in and got got")
     res.send("Hello World")
 })
 
