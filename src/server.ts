@@ -1,7 +1,7 @@
 import axios = require("axios")
 import express = require("express")
 
-const PORT = 3000
+const PORT = process.env.PORT || 5000
 const app: express.Application = express()
 
 app.get('/', function(req, res) {
