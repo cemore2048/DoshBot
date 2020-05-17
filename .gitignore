@@ -1,6 +1,7 @@
 coverage
 *.log
 node_modules
+build/
 .DS_Store
 .serverless
 config.json
