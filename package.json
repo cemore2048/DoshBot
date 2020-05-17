@@ -6,7 +6,7 @@
   "scripts": {
     "test": "\"echo \\\"Error: no test specified\\\" && exit 1\"",
     "tsc": "tsc",
-    "start": "npm run tsc && node build/index.js",
+    "start": "npm run tsc && node build/server.js",
     "clean": "rm -rf build node_modules"
   },
   "author": "Rafa",
