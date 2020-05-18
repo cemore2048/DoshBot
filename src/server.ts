@@ -86,6 +86,7 @@ app.post('/challenge', function(req, res) {
             }
             
         }
+        res.sendStatus(200)
     }
 })
 
