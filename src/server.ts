@@ -40,13 +40,13 @@ app.post('/challenge', function(req, res) {
         console.log("Trying to match " + message)
 
         const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]+/
-        const match = message.search(reg)
+        const match = message.exec(reg)
 
-        if (match  == -1) {
+        if (match  == null) {
             console.log("We found a match of " + match)
             res.sendStatus(200)
         } else {
-            console.log("Posting for user " + match)
+            console.log("Posting for user " + match[0])
             instance.post("/" + POST_MESSAGE, {
                 "token" : botToken,
                 "channel" : "#shoutouts",
