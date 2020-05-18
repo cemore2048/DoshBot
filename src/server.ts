@@ -35,6 +35,7 @@ app.post('/challenge', function(req, res) {
     } else {
         // Assume this was called because we got message.channel event from Slack
         const event = req.body["event"]
+        console.log(event)
         const message = event["text"]
         
         console.log("Trying to match " + message)
