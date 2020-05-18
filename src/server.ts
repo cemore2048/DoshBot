@@ -44,16 +44,17 @@ app.post('/challenge', function(req, res) {
 
         if (match  == -1) {
             console.log("We found a match of " + match)
+            res.sendStatus(200)
         } else {
-            console.log("Sending post")
+            console.log("Posting for user " + match)
             instance.post("/" + POST_MESSAGE, {
                 "token" : botToken,
                 "channel" : "#shoutouts",
-                "text" : match + "has 3 points"
+                "text" : match + " has 3 points"
             }).then((response: AxiosResponse) => {
-                console.log(response)
+                console.log("Successfull response")
             }, (error: AxiosResponse) => {
-                console.log("what a horrible error")
+                console.log(error)
             })
 
             res.sendStatus(200)
