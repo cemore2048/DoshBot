@@ -9,9 +9,11 @@ const PORT = port || 5000
 const app: express.Application = express()
 
 const CHANNEL_NOT_FOUND = "channel_not_found"
+let shoutOutChannel = ""
 
 const BASE_WEB_API_URL = "https://slack.com/api/"
 const POST_MESSAGE = "chat.postMessage"
+const CHANNELS = "conversations.list"
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,38 +29,59 @@ const instance = axios.create({
 })
 
 app.post('/challenge', function(req, res) {
-    console.log("message posted to channel")
+    if (shoutOutChannel == "") {
+        instance.get("/" + CHANNELS, {
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded",
+                "token": botToken,
+                "types": "public_channel"
+            }
+        }).then((response: AxiosResponse) => {
+            const channels = response.data.body["channels"]
+            for (let channel of channels) {
+                if (channel["name"] == "shoutouts") {
+                    console.log("Shout out channel identified")
+                    shoutOutChannel = channel["id"]
+                    break
+                }
+            }
+        })
+    }
 
     if (req.body["challenge"] != undefined) {
         const challenge = req.body["challenge"]
         res.send(challenge)
-    } else {
+    }  else {
         // Assume this was called because we got message.channel event from Slack
-        const event = req.body["event"]
-        console.log(event)
-        const message = event["text"]
+        if (req.body["channel"] != shoutOutChannel) {
+            const event = req.body["event"]
+            console.log(event)
+
+            const message = event["text"]
         
-        console.log("Trying to match " + message)
+            console.log("Trying to match " + message)
 
-        const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]+/
-        const match = message.match(reg)
+            const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]+/
+            const match = message.match(reg)
 
-        if (match  == null) {
-            console.log("We found a match of " + match)
-            res.sendStatus(200)
-        } else {
-            console.log("Posting for user " + match[0])
-            instance.post("/" + POST_MESSAGE, {
-                "token" : botToken,
-                "channel" : "#shoutouts",
-                "text" : match + " has 3 points"
-            }).then((response: AxiosResponse) => {
-                console.log("Successfull response")
-            }, (error: AxiosResponse) => {
-                console.log(error)
-            })
+            if (match  == null) {
+                console.log("We found a match of " + match)
+                res.sendStatus(200)
+            } else {
+                console.log("Posting for user " + match[0])
+                instance.post("/" + POST_MESSAGE, {
+                    "token" : botToken,
+                    "channel" : "#shoutouts",
+                    "text" : match + " has 3 points"
+                }).then((response: AxiosResponse) => {
+                    console.log("Successfull response")
+                }, (error: AxiosResponse) => {
+                    console.log(error)
+                })
 
-            res.sendStatus(200)
+                res.sendStatus(200)
+            }
+            
         }
     }
 })
