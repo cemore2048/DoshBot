@@ -39,8 +39,7 @@ app.post('/challenge', function(req, res) {
         }).then((response: AxiosResponse) => {
             console.log("GETTING CHANNELS")
             console.log(response.data)
-            console.log(response.data.body)
-            const channels = response.data.body["channels"]
+            const channels = response.data["channels"]
             for (let channel of channels) {
                 if (channel["name"] == "shoutouts") {
                     console.log("Shout out channel identified")
