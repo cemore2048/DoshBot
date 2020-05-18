@@ -29,6 +29,7 @@ app.post('/challenge', function(req, res) {
 
         if (match  == -1) {
             console.log("We found a match of " + match)
+            res.sendStatus(200)
         } else {
             res.sendStatus(200)
         }
