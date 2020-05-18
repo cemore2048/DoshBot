@@ -2,7 +2,8 @@ import express = require("express")
 import bodyParser = require('body-parser');
 
 const { port, botToken } = require('./config');
-const axios = require("axios").default;
+
+import axios, { AxiosResponse } from "axios";
 
 const PORT = port || 5000
 const app: express.Application = express()
@@ -32,7 +33,6 @@ app.post('/challenge', function(req, res) {
         const challenge = req.body["challenge"]
         res.send(challenge)
     } else {
-        res.sendStatus(200)
         // Assume this was called because we got message.channel event from Slack
         const event = req.body["event"]
         const message = event["text"]
@@ -45,15 +45,17 @@ app.post('/challenge', function(req, res) {
         if (match  == -1) {
             console.log("We found a match of " + match)
         } else {
-            axios.post("/" + POST_MESSAGE, {
+            console.log("Sending post")
+            instance.post("/" + POST_MESSAGE, {
                 "token" : botToken,
                 "channel" : "#shoutouts",
                 "text" : match + "has 3 points"
-            }).then((response) =>  {
-                console.log(response())
-            }, (error) => {
-                console.log(error)
+            }).then((response: AxiosResponse) => {
+                console.log(response)
+            }, (error: AxiosResponse) => {
+                console.log("what a horrible error")
             })
+
             res.sendStatus(200)
         }
     }
