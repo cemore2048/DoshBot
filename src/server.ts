@@ -41,7 +41,7 @@ app.post('/challenge', function(req, res) {
         console.log("Trying to match " + message)
 
         const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]+/
-        const match = message.exec(reg)
+        const match = message.match(reg)
 
         if (match  == null) {
             console.log("We found a match of " + match)
