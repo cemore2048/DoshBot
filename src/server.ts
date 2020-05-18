@@ -55,6 +55,7 @@ app.post('/challenge', function(req, res) {
         res.send(challenge)
     }  else {
         // Assume this was called because we got message.channel event from Slack
+        console.log("Checking to see if " + req.body["channel"] + " is the same as " + shoutOutChannel)
         if (req.body["channel"] != shoutOutChannel) {
             const event = req.body["event"]
             console.log(event)
