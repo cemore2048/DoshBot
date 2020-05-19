@@ -64,7 +64,7 @@ app.post('/challenge', function(req, res) {
             const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]*/
             const match = message.match(reg)
 
-            if (match  == null) {
+            if (match == null) {
                 console.log("We found a match of " + match)
                 res.sendStatus(200)
             } else {
@@ -72,7 +72,14 @@ app.post('/challenge', function(req, res) {
                 instance.post("/" + POST_MESSAGE, {
                     "token" : botToken,
                     "channel" : "#shoutouts",
-                    "text" : match + " has 3 points"
+                    "text" : match,
+                    "blocks" : [{
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "12 points"
+                        }
+                    }]
                 }).then((response: AxiosResponse) => {
                     console.log("Successfull response")
                 }, (error: AxiosResponse) => {
