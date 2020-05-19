@@ -56,14 +56,11 @@ app.post('/challenge', function(req, res) {
     }  else {
         // Assume this was called because we got message.channel event from Slack
         const event = req.body["event"]
-        console.log("Checking to see if " + event["channel"] + " is the same as " + shoutOutChannel)
         if (event["channel"] != shoutOutChannel) {
             console.log(event)
 
             const message = event["text"]
         
-            console.log("Trying to match " + message)
-
             const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]+/
             const match = message.match(reg)
 
@@ -84,7 +81,6 @@ app.post('/challenge', function(req, res) {
 
                 res.sendStatus(200)
             }
-            
         }
         res.sendStatus(200)
     }
