@@ -61,7 +61,7 @@ app.post('/challenge', function(req, res) {
 
             const message = event["text"]
         
-            const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]+/
+            const reg = /<@[a-zA-Z0-9]+>\+{2}[\w\s]*/
             const match = message.match(reg)
 
             if (match  == null) {
