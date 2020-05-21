@@ -4,7 +4,7 @@
   "description": "Dosh kudos bot",
   "main": "index.js",
   "scripts": {
-    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\"",
+    "test": "\"echo \\\"Error: no tests specified\\\" && exit 1\"",
     "tsc": "tsc",
     "start": "npm run tsc && node build/server.js",
     "clean": "rm -rf build node_modules"
